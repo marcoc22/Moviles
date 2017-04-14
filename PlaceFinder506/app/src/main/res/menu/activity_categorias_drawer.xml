@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_clinica"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Clinicas" />
+            android:title="Clínicas" />
         <item
             android:id="@+id/nav_farmacia"
             android:icon="@drawable/farmacia"
@@ -14,17 +14,9 @@
             android:id="@+id/nav_macrobiotica"
             android:icon="@drawable/ic_menu_camera"
             android:title="Macrobióticas" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Comparte">
         <menu>
             <item
                 android:id="@+id/nav_share"
@@ -34,11 +26,10 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Sugerencias" />
-            <item
-                android:id="@+id/nav_creditos"
-                android:icon="@drawable/developer"
-                android:title="Créditos" />
         </menu>
     </item>
-
+    <item
+        android:id="@+id/nav_creditos"
+        android:icon="@drawable/developer"
+        android:title="Créditos" />
 </menu>

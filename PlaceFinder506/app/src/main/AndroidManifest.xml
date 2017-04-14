@@ -27,7 +27,7 @@
             android:name=".categorias"
             android:label="@string/title_activity_categorias"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DeveloperInfo"></activity>
+        <activity android:name=".DeveloperInfo" />
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@ public class Actividad01 extends AppCompatActivity {
         setContentView(R.layout.activity_actividad01);
 
         // A continuación mi código para OnCreate
-        Mensaje("Bienvenido Actividad 01");
+        Mensaje("PLACEFINDER506");
 
         OnclickDelButton(R.id.btnLogin);
         OnclickDelButton(R.id.btnApp);

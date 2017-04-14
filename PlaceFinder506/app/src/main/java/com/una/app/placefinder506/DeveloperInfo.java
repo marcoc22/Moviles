@@ -10,7 +10,7 @@ public class DeveloperInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_developer_info);
         // A continuación mi código para OnCreate
-        Mensaje("Bienvenido DeveloperInfo");
+        Mensaje("Información de Desarrolladores");
 
 
     } // Fin del Oncreate de la DeveloperInfo
