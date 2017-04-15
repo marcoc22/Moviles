@@ -30,5 +30,6 @@
         android:layout_alignTop="@+id/btnLogin"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="false" />
+        android:layout_alignParentStart="false"
+        android:background="@drawable/mano" />
 </RelativeLayout>
