@@ -10,6 +10,12 @@
     tools:context="com.una.app.placefinder506.Actividad01"
     android:background="@drawable/mano">
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"></com.google.android.gms.common.SignInButton>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
