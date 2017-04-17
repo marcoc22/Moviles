@@ -13,10 +13,22 @@
     android:weightSum="1">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="106dp"
+        android:id="@+id/imageViewfoto"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@drawable/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textViewnombre" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textViewcorreo" />
 
 </LinearLayout>
