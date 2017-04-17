@@ -15,18 +15,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".categorias"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
         <activity android:name=".DeveloperInfo" />
         <activity
             android:name=".InfoAyuda"
             android:label="@string/title_activity_info_ayuda"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Actividad01">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

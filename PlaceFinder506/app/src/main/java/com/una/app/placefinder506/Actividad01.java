@@ -25,7 +25,7 @@ public class Actividad01 extends AppCompatActivity implements GoogleApiClient.On
         setContentView(R.layout.activity_actividad01);
 
         // A continuación mi código para OnCreate
-        Mensaje("PLACEFINDER506");
+        Mensaje(" Iniciar Sesión PLACEFINDER506");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -41,8 +41,8 @@ public class Actividad01 extends AppCompatActivity implements GoogleApiClient.On
                 startActivityForResult(intent,SIGN_IN_CODE);
             }
         });
-        OnclickDelButton(R.id.btnLogin);
-        OnclickDelButton(R.id.btnApp);
+        //OnclickDelButton(R.id.btnLogin);
+        //OnclickDelButton(R.id.btnApp);
 
     } // Fin del Oncreate de la Actividad 01
 
@@ -74,7 +74,7 @@ public class Actividad01 extends AppCompatActivity implements GoogleApiClient.On
 
     public void Mensaje(String msg){getSupportActionBar().setTitle(msg);};
 
-    public void OnclickDelButton(int ref) {
+    /*public void OnclickDelButton(int ref) {
 
         // Ejemplo  OnclickDelButton(R.id.MiButton);
         // 1 Doy referencia al Button
@@ -103,5 +103,6 @@ public class Actividad01 extends AppCompatActivity implements GoogleApiClient.On
             }// fin del onclick
         });
     }// fin de OnclickDelButton
+    */
 
 } // [18:25:04] Fin de la Clase Actividad 01

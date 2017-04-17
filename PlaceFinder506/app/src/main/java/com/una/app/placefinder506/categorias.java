@@ -89,8 +89,10 @@ public class categorias extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         TextView textViewcorreo = (TextView) findViewById(R.id.textViewcorreo);
         TextView textViewnombre = (TextView) findViewById(R.id.textViewnombre);
-        textViewnombre.setText(account.getDisplayName());
-        textViewcorreo.setText(account.getEmail());
+        if(account!=null){
+            textViewnombre.setText(account.getDisplayName());
+            textViewcorreo.setText(account.getEmail());
+        }
         getMenuInflater().inflate(R.menu.categorias, menu);
         return true;
     }
