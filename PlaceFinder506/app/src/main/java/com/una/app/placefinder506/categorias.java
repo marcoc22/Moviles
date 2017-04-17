@@ -1,6 +1,7 @@
 package com.una.app.placefinder506;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,6 +27,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 public class categorias extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
@@ -105,9 +108,9 @@ public class categorias extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_ayuda) {
-            Intent intento = new Intent(getApplicationContext(), InfoAyuda.class);
-            startActivity(intento);
+        if (id == R.id.action_ayuda) {//revisar!
+//            Intent intento = new Intent(getApplicationContext(), InfoAyuda.class);
+//            startActivity(intento);
             return true;
         }
 
@@ -128,11 +131,46 @@ public class categorias extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
             //compartir en redes sociales la ubicación(o un screenshot)
+//            Uri uriToImage =
+//                    Uri.parse(
+//                            "android.resource://net.learn2develop.CallingApps/drawable/" +
+//                                    Integer.toString(R.drawable.sh));
+//            Intent intento = new Intent(android.content.Intent.ACTION_SEND);
+//            intento.setType("image/png");
+//            intento.putExtra(Intent.EXTRA_STREAM, uriToImage);
+//            intento.putExtra(Intent.EXTRA_TEXT, "Mi mensaje");
+//            startActivity(Intent.createChooser(intento, "Apps that can respond to this"));
         } else if (id == R.id.nav_send) {
             //enviar un correo (gmail) a los desarrolladores
+            Intent intento = new Intent(Intent.ACTION_SEND);
+            intento.setData(Uri.parse("mailto:"));
+            String[] to = { "massiel.mora.rodriguez@est.una.ac.cr" , "brarodriguezm@hotmail.com" , "angelicamrs16@gmail.com"};
+            String[] cc = { "massimoro029@gmail.com" };
+            intento.putExtra(Intent.EXTRA_EMAIL, to);
+            intento.putExtra(Intent.EXTRA_CC, cc);
+            intento.putExtra(Intent.EXTRA_SUBJECT, "Informe sobre PlaceFinder506");
+            intento.putExtra(Intent.EXTRA_TEXT, " ");
+            intento.setType("message/rfc822");
+            startActivity(Intent.createChooser(intento, "Email"));
+
+
+
         } else if (id == R.id.nav_creditos) {
             Intent intento = new Intent(getApplicationContext(), DeveloperInfo.class);
             startActivity(intento);
+        }
+
+        else if (id == R.id.nav_salir) {
+            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                @Override
+                public void onResult(@NonNull Status status) {
+                    if(status.isSuccess()){
+                        googleInScreen();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"No se pudo cerrar sesión",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
