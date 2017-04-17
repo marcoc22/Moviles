@@ -30,8 +30,8 @@ public class categorias extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     private ImageView imageViewFoto;
-    private TextView textViewnombre;
-    private TextView textViewcorreo;
+    private GoogleSignInAccount account;
+
 
     private GoogleApiClient googleApiClient;
     @Override
@@ -39,6 +39,7 @@ public class categorias extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorias);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -59,6 +60,8 @@ public class categorias extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -67,10 +70,12 @@ public class categorias extends AppCompatActivity
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
+
     }
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -82,6 +87,10 @@ public class categorias extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        TextView textViewcorreo = (TextView) findViewById(R.id.textViewcorreo);
+        TextView textViewnombre = (TextView) findViewById(R.id.textViewnombre);
+        textViewnombre.setText(account.getDisplayName());
+        textViewcorreo.setText(account.getEmail());
         getMenuInflater().inflate(R.menu.categorias, menu);
         return true;
     }
@@ -107,6 +116,7 @@ public class categorias extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_clinica) {
@@ -148,9 +158,8 @@ public class categorias extends AppCompatActivity
 
     private void handleSignInResult(GoogleSignInResult result){
         if(result.isSuccess()){
-            GoogleSignInAccount account = result.getSignInAccount();
-            textViewnombre.setText(account.getDisplayName());
-            textViewcorreo.setText(account.getEmail());
+            account = result.getSignInAccount();
+
         }else{
             googleInScreen();
         }

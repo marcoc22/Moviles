@@ -14,21 +14,21 @@
 
     <ImageView
         android:id="@+id/imageViewfoto"
-        android:layout_width="104dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="84dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@drawable/logo" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="nombre"
         android:id="@+id/textViewnombre" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="correo"
         android:id="@+id/textViewcorreo" />
 
 </LinearLayout>
