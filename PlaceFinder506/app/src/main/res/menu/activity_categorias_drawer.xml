@@ -29,7 +29,11 @@
         </menu>
     </item>
     <item
-        android:id="@+id/nav_creditos"
+    android:id="@+id/nav_creditos"
+    android:icon="@drawable/developer"
+    android:title="Créditos" />
+    <item
+        android:id="@+id/nav_salir"
         android:icon="@drawable/developer"
-        android:title="Créditos" />
+        android:title="Cerrar sesión" />
 </menu>

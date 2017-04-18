@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_ayuda"
         android:orderInCategory="100"
-        android:title="ayuda"
+        android:title="Ayuda"
         app:showAsAction="never" />
 </menu>
