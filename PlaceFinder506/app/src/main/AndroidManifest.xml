@@ -32,7 +32,9 @@
         <activity
             android:name=".InfoAyuda"
             android:label="@string/title_activity_info_ayuda"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        </activity>
         <activity android:name=".Actividad01">
         </activity>
         <meta-data

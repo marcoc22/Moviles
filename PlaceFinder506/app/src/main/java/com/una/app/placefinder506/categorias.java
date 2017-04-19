@@ -3,6 +3,7 @@ package com.una.app.placefinder506;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -102,22 +103,22 @@ public class categorias extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_ayuda) {//revisar!
-//            Intent intento = new Intent(getApplicationContext(), InfoAyuda.class);
-//            startActivity(intento);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.nav_view) {//revisar!
+//           Intent intento = new Intent(getApplicationContext(), InfoAyuda.class);
+//           startActivity(intento);
+//           return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -127,6 +128,7 @@ public class categorias extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_clinica) {
+
         } else if (id == R.id.nav_farmacia) {
 
         }else if (id == R.id.nav_macrobiotica) {
@@ -160,9 +162,7 @@ public class categorias extends AppCompatActivity
         } else if (id == R.id.nav_creditos) {
             Intent intento = new Intent(getApplicationContext(), DeveloperInfo.class);
             startActivity(intento);
-        }
-
-        else if (id == R.id.nav_salir) {
+        } else if (id == R.id.nav_salir) {
             Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
                 @Override
                 public void onResult(@NonNull Status status) {

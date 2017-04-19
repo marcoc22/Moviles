@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import static com.una.app.placefinder506.R.layout.activity_info_ayuda;
+
 public class InfoAyuda extends AppCompatActivity {
 
     @Override
