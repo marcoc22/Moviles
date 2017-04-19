@@ -146,7 +146,7 @@ public class categorias extends AppCompatActivity
             //enviar un correo (gmail) a los desarrolladores
             Intent intento = new Intent(Intent.ACTION_SEND);
             intento.setData(Uri.parse("mailto:"));
-            String[] to = { "massiel.mora.rodriguez@est.una.ac.cr" , "brarodriguezm@hotmail.com" , "angelicamrs16@gmail.com"};
+            String[] to = { "marcoc22@hotmail.es" , "massiel.mora.rodriguez@est.una.ac.cr" , "brarodriguezm@hotmail.com" , "angelicamrs16@gmail.com"};
             String[] cc = { "massimoro029@gmail.com" };
             intento.putExtra(Intent.EXTRA_EMAIL, to);
             intento.putExtra(Intent.EXTRA_CC, cc);
