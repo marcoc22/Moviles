@@ -38,6 +38,7 @@ import java.util.List;
 public class categorias extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
+    //el imageview es para setear la foto con la cuenta del usuario más adelante
     private ImageView imageViewfoto;
     private GoogleSignInAccount account;
 
@@ -87,6 +88,7 @@ public class categorias extends AppCompatActivity
                 .build();
         FragmentManager fm = getFragmentManager();
         fragmentoMapa = new FragmentoMapa();
+        //actualiza el fragmento con el deseado
         fm.beginTransaction().replace(R.id.contentFrame,fragmentoMapa).commit();
     }
 
@@ -103,14 +105,12 @@ public class categorias extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         TextView textViewcorreo = (TextView) findViewById(R.id.textViewcorreo);
         TextView textViewnombre = (TextView) findViewById(R.id.textViewnombre);
         if(account!=null){
+            //setea los datos con el correo y el nombre del usuario correspondiente
             textViewnombre.setText(account.getDisplayName());
             textViewcorreo.setText(account.getEmail());
-
-
         }
         getMenuInflater().inflate(R.menu.categorias, menu);
         return true;
@@ -125,7 +125,7 @@ public class categorias extends AppCompatActivity
 //
 //        //noinspection SimplifiableIfStatement
 //        if (id == R.id.nav_view) {//revisar!
-//           Intent intento = new Intent(getApplicationContext(), LoginActivity.class);
+//           Intent intento = new Intent(getApplicationContext(), nformacionAyuda.class);
 //           startActivity(intento);
 //           return true;
 //        }
