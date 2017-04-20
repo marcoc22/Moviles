@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_clinica"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/places_ic_search"
             android:title="Clínicas" />
         <item
             android:id="@+id/nav_farmacia"
-            android:icon="@drawable/farmacia"
+            android:icon="@drawable/places_ic_search"
             android:title="Farmacias" />
         <item
             android:id="@+id/nav_macrobiotica"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/places_ic_search"
             android:title="Macrobióticas" />
     </group>
 
@@ -30,10 +30,10 @@
     </item>
     <item
     android:id="@+id/nav_creditos"
-    android:icon="@drawable/developer"
+    android:icon="@drawable/ic_cast_disabled_light"
     android:title="Créditos" />
     <item
         android:id="@+id/nav_salir"
-        android:icon="@drawable/developer"
+        android:icon="@drawable/ic_close_light"
         android:title="Cerrar sesión" />
 </menu>

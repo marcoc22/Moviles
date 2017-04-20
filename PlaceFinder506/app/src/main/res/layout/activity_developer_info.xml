@@ -13,11 +13,9 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_marginTop="50dp"
+        android:id="@+id/imageViewMassi"
         android:src="@drawable/massi"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageViewMarco"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -26,8 +24,65 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Massiel Mora Rodríguez           Cédula: 604190071"
         android:id="@+id/textViewMassi"
-        android:layout_alignBottom="@+id/imageView2"
-        android:layout_toRightOf="@+id/imageView2"
-        android:layout_toEndOf="@+id/imageView2"
+        android:layout_alignBottom="@+id/imageViewMassi"
+        android:layout_toRightOf="@+id/imageViewMassi"
+        android:layout_toEndOf="@+id/imageViewMassi"
         android:textColor="@color/abc_primary_text_material_dark" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewAngelica"
+        android:src="@drawable/angelica"
+        android:layout_below="@+id/imageViewBryhan"
+        android:layout_toStartOf="@+id/textViewMassi" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewMarco"
+        android:src="@drawable/marco"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/textViewMarco" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewBryhan"
+        android:src="@drawable/bryhan"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/imageViewMassi"
+        android:layout_below="@+id/imageViewMassi" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Marco Canales Mesén           Cédula: 402250724 "
+        android:id="@+id/textViewMarco"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:layout_alignBottom="@+id/imageViewMarco"
+        android:layout_alignStart="@+id/textViewMassi" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Angélica Rojas Solera          Cédula: 402310375        "
+        android:id="@+id/textViewAngelica"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:layout_alignBottom="@+id/imageViewAngelica"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/imageViewAngelica" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Bryhan Rodríguez Mora          Cédula: 115420325"
+        android:id="@+id/textViewBryhan"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:layout_above="@+id/imageViewAngelica"
+        android:layout_toEndOf="@+id/imageViewAngelica" />
+
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -34,7 +35,7 @@ import com.google.android.gms.common.api.Status;
 public class categorias extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
-    private ImageView imageViewFoto;
+    private ImageView imageViewfoto;
     private GoogleSignInAccount account;
 
 
@@ -98,6 +99,8 @@ public class categorias extends AppCompatActivity
         if(account!=null){
             textViewnombre.setText(account.getDisplayName());
             textViewcorreo.setText(account.getEmail());
+
+
         }
         getMenuInflater().inflate(R.menu.categorias, menu);
         return true;
@@ -112,7 +115,7 @@ public class categorias extends AppCompatActivity
 //
 //        //noinspection SimplifiableIfStatement
 //        if (id == R.id.nav_view) {//revisar!
-//           Intent intento = new Intent(getApplicationContext(), InfoAyuda.class);
+//           Intent intento = new Intent(getApplicationContext(), LoginActivity.class);
 //           startActivity(intento);
 //           return true;
 //        }
@@ -133,6 +136,10 @@ public class categorias extends AppCompatActivity
 
         }else if (id == R.id.nav_macrobiotica) {
 
+        } else if (id == R.id.nav_view) {//revisar!
+            Intent intento = new Intent(getApplicationContext(), nformacionAyuda.class);
+            startActivity(intento);
+            return true;
         } else if (id == R.id.nav_share) {
             //compartir en redes sociales la ubicación(o un screenshot)
 //            Uri uriToImage =
