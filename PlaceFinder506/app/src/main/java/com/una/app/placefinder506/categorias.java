@@ -32,6 +32,9 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class categorias extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -40,13 +43,19 @@ public class categorias extends AppCompatActivity
 
 
     private GoogleApiClient googleApiClient;
+    private FragmentoMapa fragmentoMapa;
+    List<Lugar> clinicas;
+    List<Lugar> farmacias;
+    List<Lugar> macrobioticas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorias);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
+        clinicas = new ArrayList<>();
+        farmacias = new ArrayList<>();
+        macrobioticas = new ArrayList<>();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +86,8 @@ public class categorias extends AppCompatActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
         FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.contentFrame,new FragmentoMapa()).commit();
+        fragmentoMapa = new FragmentoMapa();
+        fm.beginTransaction().replace(R.id.contentFrame,fragmentoMapa).commit();
     }
 
     @Override
@@ -131,11 +141,21 @@ public class categorias extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_clinica) {
-
+            this.fragmentoMapa.getMiMapa().clear();
+            this.fragmentoMapa.ubicacionActual();
+            cargarClinicias();
+            this.fragmentoMapa.ubicarClinicas(this.clinicas);
         } else if (id == R.id.nav_farmacia) {
+            this.fragmentoMapa.getMiMapa().clear();
+            this.fragmentoMapa.ubicacionActual();
+            cargarFarmacias();
+            this.fragmentoMapa.ubicarFarmacias(this.farmacias);
 
         }else if (id == R.id.nav_macrobiotica) {
-
+            this.fragmentoMapa.getMiMapa().clear();
+            this.fragmentoMapa.ubicacionActual();
+            cargarMacrobioticas();
+            this.fragmentoMapa.ubicarMacrobioticas(this.macrobioticas);
         } else if (id == R.id.nav_view) {//revisar!
             Intent intento = new Intent(getApplicationContext(), nformacionAyuda.class);
             startActivity(intento);
@@ -223,5 +243,19 @@ public class categorias extends AppCompatActivity
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+    public void cargarClinicias(){
+        this.clinicas.add(new Lugar("Clínica Guararí",9.9981466,-84.121953));
+    }
+    public void cargarFarmacias(){
+        this.farmacias.add(new Lugar("Farmacia Fischel",9.9682309,-84.1203954));
+        this.farmacias.add(new Lugar("Farmacia Sucre San Francisco De Heredia",9.9961119,-84.1285801));
+        this.farmacias.add(new Lugar("Farmacia Las Hortensias",9.9891646,-84.1522265));
+        this.farmacias.add(new Lugar("Farmacia Santander",9.9846422,-84.1493512));
+    }
+    public void cargarMacrobioticas(){
+        this.macrobioticas.add(new Lugar("Macrobiótica LEAF Salud Natural",9.997198,-84.1218801));
+        this.macrobioticas.add(new Lugar("Macrobiótica Heredia",9.996912,-84.1206612));
+        this.macrobioticas.add(new Lugar("Macrobiótica San Cristóbal",9.9846422,-84.1493512));
     }
 }
