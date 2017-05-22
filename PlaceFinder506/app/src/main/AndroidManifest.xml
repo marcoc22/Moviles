@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
 
     <application
         android:allowBackup="true"
@@ -29,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".DeveloperInfo" />
-        <activity android:name=".Actividad01"></activity>
+        <activity android:name=".Actividad01" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -38,10 +40,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCCrSbDZ5wch_NTF-MBNfk2FEn-UZY7CTk" />
 
-        <activity
-            android:name=".nformacionAyuda"
-            android:label="@string/title_activity_nformacion_ayuda"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 package com.una.app.placefinder506;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class DeveloperInfo extends AppCompatActivity {
 
@@ -11,7 +11,6 @@ public class DeveloperInfo extends AppCompatActivity {
         setContentView(R.layout.activity_developer_info);
         // A continuación mi código para OnCreate
         Mensaje("Información de Desarrolladores");
-
 
     } // Fin del Oncreate de la DeveloperInfo
 

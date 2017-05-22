@@ -1,16 +1,13 @@
 package com.una.app.placefinder506;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.app.FragmentManager;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -133,6 +131,14 @@ public class categorias extends AppCompatActivity
 //        return super.onOptionsItemSelected(item);
 //    }
 
+    public void  EnviarMensaje(){
+        Intent i = new Intent(android.content.Intent.ACTION_VIEW);
+        i.putExtra("address", " ");
+        i.putExtra("sms_body", "Esta es mi ubicación: ");
+        i.setType("vnd.android-dir/mms-sms");
+        startActivity(i);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -156,21 +162,11 @@ public class categorias extends AppCompatActivity
             this.fragmentoMapa.ubicacionActual();
             cargarMacrobioticas();
             this.fragmentoMapa.ubicarMacrobioticas(this.macrobioticas);
-        } else if (id == R.id.nav_view) {//revisar!
-            Intent intento = new Intent(getApplicationContext(), nformacionAyuda.class);
-            startActivity(intento);
-            return true;
-        } else if (id == R.id.nav_share) {
-            //compartir en redes sociales la ubicación(o un screenshot)
-//            Uri uriToImage =
-//                    Uri.parse(
-//                            "android.resource://net.learn2develop.CallingApps/drawable/" +
-//                                    Integer.toString(R.drawable.sh));
-//            Intent intento = new Intent(android.content.Intent.ACTION_SEND);
-//            intento.setType("image/png");
-//            intento.putExtra(Intent.EXTRA_STREAM, uriToImage);
-//            intento.putExtra(Intent.EXTRA_TEXT, "Mi mensaje");
-//            startActivity(Intent.createChooser(intento, "Apps that can respond to this"));
+        }
+        else if (id == R.id.nav_msj) {
+            //ENVIAR UN MSJ CON LA UBICACIÓN ACTUAL
+            EnviarMensaje();
+
         } else if (id == R.id.nav_send) {
             //enviar un correo (gmail) a los desarrolladores
             Intent intento = new Intent(Intent.ACTION_SEND);
