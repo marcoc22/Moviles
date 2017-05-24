@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.location.LocationListener;
+import android.widget.Button;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,6 +35,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
     private GoogleMap miMapa;
     private Location location;
     private Marker marcador;
+    private Lugar lugarSeleccionado;
     double latitud = 0.0;
     double longitud = 0.0;
     Context aux2;
@@ -64,10 +68,70 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         miMapa = googleMap;
+        lugarSeleccionado = new Lugar();
         //si pongo este método se cae
         miUbicacion();
         //ubicacionActual();
+        miMapa.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                LatLng position = marker.getPosition(); //
+                lugarSeleccionado.setLatitud(position.latitude);
+                lugarSeleccionado.setLongitud(position.longitude);
+                lugarSeleccionado.setNombre(marker.getTitle());
+                Button btnIr = (Button) getActivity().findViewById(R.id.btnIr);
+                Button btnEditar = (Button) getActivity().findViewById(R.id.btnEditar);
+                Button btnEliminar = (Button) getActivity().findViewById(R.id.btnEliminar);
+                if (btnIr.getVisibility()==btnIr.VISIBLE){
+                    btnIr.setVisibility(btnIr.INVISIBLE);} else {btnIr.setVisibility(btnIr.VISIBLE);}
+                if (btnEditar.getVisibility()==btnEditar.VISIBLE){
+                    btnEditar.setVisibility(btnEditar.INVISIBLE);} else {btnEditar.setVisibility(btnEditar.VISIBLE);}
+                if (btnEliminar.getVisibility()==btnEliminar.VISIBLE){
+                    btnEliminar.setVisibility(btnEliminar.INVISIBLE);} else {btnEliminar.setVisibility(btnEliminar.VISIBLE);}
+                return false;
+            }
+        });
+        OnclickDelButton(R.id.btnIr);
+        OnclickDelButton(R.id.btnEditar);
+        OnclickDelButton(R.id.btnEliminar);
     }
+    public void OnclickDelButton(int ref) {
+
+        // Ejemplo  OnclickDelButton(R.id.MiButton);
+        // 1 Doy referencia al Button
+        View view = getActivity().findViewById(ref);
+        Button miButton = (Button) view;
+        //  final String msg = miButton.getText().toString();
+        // 2.  Programar el evento onclick
+        miButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // if(msg.equals("Texto")){Mensaje("Texto en el botón ");};
+                switch (v.getId()) {
+
+                    case R.id.btnIr:
+                        Mensaje("metodo ruta aquí");
+                        Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
+                        break;
+
+                    case R.id.btnEditar:
+                        Mensaje("metodo editar aqui");
+                        Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
+                        break;
+
+                    case R.id.btnEliminar:
+                        Mensaje("metodo eliminar aqui");
+                        Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
+                        break;
+                    default:
+                        break;
+                }// fin de casos
+            }// fin del onclick
+        });
+    }//fin del onclick del boton
+
+    public void Mensaje(String msg){
+        Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();};
     public void ubicacionActual(){
         LatLng milugar = new LatLng(9.971157, -84.129138);
         miMapa.addMarker(new MarkerOptions().position(milugar).title("Escuela de Informática"));
