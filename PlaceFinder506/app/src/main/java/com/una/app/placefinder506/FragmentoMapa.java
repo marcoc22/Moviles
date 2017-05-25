@@ -2,18 +2,22 @@ package com.una.app.placefinder506;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.location.LocationListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -25,6 +29,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -94,7 +100,70 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
         OnclickDelButton(R.id.btnIr);
         OnclickDelButton(R.id.btnEditar);
         OnclickDelButton(R.id.btnEliminar);
+
+        miMapa.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(final LatLng latLng) {
+                // que hacer después de una larga presión en la pantalla
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                final View dialoglayout = inflater.inflate(R.layout.registro, null);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Agregar",new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Mensaje("Itentando agregar Lugar");
+                        EditText nombre = (EditText) dialoglayout.findViewById(R.id.txtNombre);
+                        EditText telefono = (EditText) dialoglayout.findViewById(R.id.txtTelefono);
+                        EditText correo = (EditText) dialoglayout.findViewById(R.id.txtCorreo);
+                        EditText pagina = (EditText) dialoglayout.findViewById(R.id.txtPagina);
+                        Spinner sp = (Spinner) dialoglayout.findViewById(R.id.spinner);
+                        Lugar l = new Lugar(nombre.getText().toString(),latLng.latitude,latLng.longitude,telefono.getText().toString(),correo.getText().toString(),pagina.getText().toString(),sp.getSelectedItemPosition());
+                        agregarLugar(l);
+                        dialog.dismiss();//Called dismiss here but dialog doesnt closes
+                    }
+                });
+                builder.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();//Called dismiss here but dialog doesnt closes
+                    }
+                });
+
+                builder.setView(dialoglayout);
+                builder.setTitle("Registro de Lugar");
+                builder.show();
+                Mensaje("LongClick");
+
+            }
+        });
     }
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    public void agregarLugar(Lugar l)
+    {
+        DatabaseReference myRef = null ;
+        switch(l.getTipo())
+        {
+            case Lugar.MACROBIOTICA:
+                myRef = database.getReference("Macrobioticas");
+                break;
+            case Lugar.FARMACIA:
+                myRef = database.getReference("Farmacias");
+                break;
+            case Lugar.CLINICA:
+                myRef = database.getReference("Clinicas");
+                break;
+        }
+        myRef.child(l.crearClave()).setValue(l);
+        //Mensaje("Agregando " + l.getNombre() + " En Lat:" + l.getLatitud() + " Lon: " + l.getLongitud());
+    }
+
+
+
     public void OnclickDelButton(int ref) {
 
         // Ejemplo  OnclickDelButton(R.id.MiButton);

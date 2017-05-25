@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,8 +89,11 @@ public class categorias extends AppCompatActivity
         fragmentoMapa = new FragmentoMapa();
         //actualiza el fragmento con el deseado
         fm.beginTransaction().replace(R.id.contentFrame,fragmentoMapa).commit();
-    }
 
+
+    }
+    public void Mensaje(String msg){
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();};
     @Override
     public void onBackPressed() {
 
@@ -241,17 +245,20 @@ public class categorias extends AppCompatActivity
 
     }
     public void cargarClinicias(){
-        this.clinicas.add(new Lugar("Clínica Guararí",9.9981466,-84.121953));
+        //this.clinicas.add(new Lugar("Clínica Guararí",9.9981466,-84.121953));
     }
     public void cargarFarmacias(){
+       /*
         this.farmacias.add(new Lugar("Farmacia Fischel",9.9682309,-84.1203954));
         this.farmacias.add(new Lugar("Farmacia Sucre San Francisco De Heredia",9.9961119,-84.1285801));
         this.farmacias.add(new Lugar("Farmacia Las Hortensias",9.9891646,-84.1522265));
         this.farmacias.add(new Lugar("Farmacia Santander",9.9846422,-84.1493512));
+        */
     }
     public void cargarMacrobioticas(){
-        this.macrobioticas.add(new Lugar("Macrobiótica LEAF Salud Natural",9.997198,-84.1218801));
+       /* this.macrobioticas.add(new Lugar("Macrobiótica LEAF Salud Natural",9.997198,-84.1218801));
         this.macrobioticas.add(new Lugar("Macrobiótica Heredia",9.996912,-84.1206612));
         this.macrobioticas.add(new Lugar("Macrobiótica San Cristóbal",9.9846422,-84.1493512));
+        */
     }
 }

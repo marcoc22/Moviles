@@ -10,6 +10,10 @@
 
     <string name="action_settings">Settings</string>
 
-
+    <string-array name="array_name">
+        <item>Macrobiótica</item>
+        <item>Farmacia</item>
+        <item>Clínica</item>
+    </string-array>
 
 </resources>
