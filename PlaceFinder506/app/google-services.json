@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "168027653998",
-    "firebase_url": "https://placefinder506-164804.firebaseio.com",
-    "project_id": "placefinder506-164804",
-    "storage_bucket": "placefinder506-164804.appspot.com"
+    "project_number": "183803292518",
+    "firebase_url": "https://placefinder506-cb35e.firebaseio.com",
+    "project_id": "placefinder506-cb35e",
+    "storage_bucket": "placefinder506-cb35e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:168027653998:android:18c066eac7307eb4",
+        "mobilesdk_app_id": "1:183803292518:android:18c066eac7307eb4",
         "android_client_info": {
           "package_name": "com.una.app.placefinder506"
         }
       },
       "oauth_client": [
         {
-          "client_id": "168027653998-eof9i7qlej9n1qil6nu77gaaa4fiafta.apps.googleusercontent.com",
+          "client_id": "183803292518-r5qi1tko76bc0dctkltsn79sruov2i7o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.una.app.placefinder506",
-            "certificate_hash": "2f315067a7a82c8ba5f66a8260a0de9d6e349389"
+            "certificate_hash": "44b6e6d914fed129c5c95c37bc26eed1726e65fd"
           }
         },
         {
-          "client_id": "168027653998-2b8aru43h570ck4mki9s4r57vrk8rl05.apps.googleusercontent.com",
+          "client_id": "183803292518-54ht7hvakahlhu2allj710d7t00nbkig.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA_fU1ixwifxX9ziZ7rroohemYYLf1oNOE"
+          "current_key": "AIzaSyAQbpWl58iIAUigYtOvjNtyV9aZ5tLspGE"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "168027653998-2b8aru43h570ck4mki9s4r57vrk8rl05.apps.googleusercontent.com",
+              "client_id": "183803292518-54ht7hvakahlhu2allj710d7t00nbkig.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
