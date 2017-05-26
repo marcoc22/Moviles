@@ -263,6 +263,7 @@ public class categorias extends AppCompatActivity
         c.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                fragmentoMapa.getMiMapa().clear();
                 clinicas = new ArrayList<Lugar>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Lugar  lugar = postSnapshot.getValue(Lugar.class);
@@ -283,6 +284,7 @@ public class categorias extends AppCompatActivity
         f.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                fragmentoMapa.getMiMapa().clear();
                 farmacias = new ArrayList<Lugar>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Lugar  lugar = postSnapshot.getValue(Lugar.class);
@@ -310,6 +312,7 @@ public class categorias extends AppCompatActivity
         m.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                fragmentoMapa.getMiMapa().clear();
                 macrobioticas = new ArrayList<Lugar>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Lugar  lugar = postSnapshot.getValue(Lugar.class);
