@@ -30,6 +30,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +53,12 @@ public class categorias extends AppCompatActivity
     List<Lugar> clinicas;
     List<Lugar> farmacias;
     List<Lugar> macrobioticas;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference f = null;
+    DatabaseReference m = null;
+    DatabaseReference c = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +101,9 @@ public class categorias extends AppCompatActivity
         fragmentoMapa = new FragmentoMapa();
         //actualiza el fragmento con el deseado
         fm.beginTransaction().replace(R.id.contentFrame,fragmentoMapa).commit();
-
+        f = database.getReference("Farmacias");
+        m = database.getReference("Macrobioticas");
+        c = database.getReference("Clinicas");
 
     }
     public void Mensaje(String msg){
@@ -245,9 +259,44 @@ public class categorias extends AppCompatActivity
 
     }
     public void cargarClinicias(){
+
+        c.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                clinicas = new ArrayList<Lugar>();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Lugar  lugar = postSnapshot.getValue(Lugar.class);
+                    clinicas.add(lugar);
+                }
+                fragmentoMapa.ubicarClinicas(clinicas);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         //this.clinicas.add(new Lugar("Clínica Guararí",9.9981466,-84.121953));
     }
     public void cargarFarmacias(){
+        f.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                farmacias = new ArrayList<Lugar>();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Lugar  lugar = postSnapshot.getValue(Lugar.class);
+                    farmacias.add(lugar);
+                }
+                fragmentoMapa.ubicarFarmacias(farmacias);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
        /*
         this.farmacias.add(new Lugar("Farmacia Fischel",9.9682309,-84.1203954));
         this.farmacias.add(new Lugar("Farmacia Sucre San Francisco De Heredia",9.9961119,-84.1285801));
@@ -256,6 +305,25 @@ public class categorias extends AppCompatActivity
         */
     }
     public void cargarMacrobioticas(){
+
+
+        m.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                macrobioticas = new ArrayList<Lugar>();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Lugar  lugar = postSnapshot.getValue(Lugar.class);
+                    macrobioticas.add(lugar);
+                }
+                fragmentoMapa.ubicarMacrobioticas(macrobioticas);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
        /* this.macrobioticas.add(new Lugar("Macrobiótica LEAF Salud Natural",9.997198,-84.1218801));
         this.macrobioticas.add(new Lugar("Macrobiótica Heredia",9.996912,-84.1206612));
         this.macrobioticas.add(new Lugar("Macrobiótica San Cristóbal",9.9846422,-84.1493512));
