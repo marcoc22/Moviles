@@ -153,7 +153,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                         EditText pagina = (EditText) dialoglayout.findViewById(R.id.txtPagina);
                         Spinner sp = (Spinner) dialoglayout.findViewById(R.id.spinner);
                         Lugar l = new Lugar(nombre.getText().toString(),latLng.latitude,latLng.longitude,telefono.getText().toString(),correo.getText().toString(),pagina.getText().toString(),sp.getSelectedItemPosition());
-                        agregarLugar(l);
+                        agregarLugar(l,l);
                         dialog.dismiss();//Called dismiss here but dialog doesnt closes
                     }
                 });
@@ -176,7 +176,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
     }
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    public void agregarLugar(Lugar l)
+    public void agregarLugar(Lugar l,Lugar l2)
     {
         DatabaseReference myRef = null ;
         switch(l.getTipo())
@@ -191,7 +191,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                 myRef = database.getReference("Clinicas");
                 break;
         }
-        myRef.child(l.crearClave()).setValue(l);
+        myRef.child(l.crearClave()).setValue(l2);
         //Mensaje("Agregando " + l.getNombre() + " En Lat:" + l.getLatitud() + " Lon: " + l.getLongitud());
     }
 
@@ -209,6 +209,8 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 // if(msg.equals("Texto")){Mensaje("Texto en el botón ");};
+                Lugar lugarObtenido = null;
+                List<Lugar> lugaresGeneral = new ArrayList<Lugar>();
                 switch (v.getId()) {
 
                     case R.id.btnIr:
@@ -225,8 +227,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                         final EditText correo = (EditText) dialoglayout.findViewById(R.id.txtCorreo);
                         final EditText pagina = (EditText) dialoglayout.findViewById(R.id.txtPagina);
                         final Spinner sp = (Spinner) dialoglayout.findViewById(R.id.spinner);
-                        Lugar lugarObtenido = null;
-                        List<Lugar> lugaresGeneral = new ArrayList<Lugar>();
+
                         if(lugarSeleccionado.getTipo()==Lugar.MACROBIOTICA){
                             lugaresGeneral = macrobioticas;
                         }else if(lugarSeleccionado.getTipo()==Lugar.FARMACIA){
@@ -249,14 +250,12 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
-
                                 lugarSeleccionado.setNombre(nombre.getText().toString());
                                 lugarSeleccionado.setTelefono(telefono.getText().toString());
                                 lugarSeleccionado.setCorreo(correo.getText().toString());
                                 lugarSeleccionado.setPaginaWeb(pagina.getText().toString());
                                 lugarSeleccionado.setTipo(sp.getSelectedItemPosition());
-                                agregarLugar(lugarSeleccionado);
+                                agregarLugar(lugarSeleccionado,lugarSeleccionado);
                                 MensajeOK(sp.getSelectedItem().toString() + " actualizada");
                                 dialog.dismiss();//Called dismiss here but dialog doesnt closes
                             }
@@ -278,8 +277,22 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                         break;
 
                     case R.id.btnEliminar:
-                        Mensaje("metodo eliminar aqui");
-                        Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
+                        //Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
+
+                        if(lugarSeleccionado.getTipo()==Lugar.MACROBIOTICA){
+                            lugaresGeneral = macrobioticas;
+                        }else if(lugarSeleccionado.getTipo()==Lugar.FARMACIA){
+                            lugaresGeneral = farmacias;
+                        }else if(lugarSeleccionado.getTipo()==Lugar.CLINICA){
+                            lugaresGeneral = clinicas;
+                        }
+                        for(int i=0;i<lugaresGeneral.size();i++){
+                            lugarObtenido = lugaresGeneral.get(i);
+                            if(lugarObtenido.getLatitud() == lugarSeleccionado.getLatitud() && lugarObtenido.getLongitud() == lugarSeleccionado.getLongitud()){
+                                agregarLugar(lugarObtenido,null);
+                                MensajeOK("Lugar eliminar");
+                            }
+                        }
                         break;
                     default:
                         break;
