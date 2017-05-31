@@ -161,6 +161,24 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
         myRef.child(l.crearClave()).setValue(l);
         //Mensaje("Agregando " + l.getNombre() + " En Lat:" + l.getLatitud() + " Lon: " + l.getLongitud());
     }
+    public void editarLugar(Lugar l)
+    {
+        DatabaseReference myRef = null ;
+        switch(l.getTipo())
+        {
+            case Lugar.MACROBIOTICA:
+                myRef = database.getReference("Macrobioticas");
+                break;
+            case Lugar.FARMACIA:
+                myRef = database.getReference("Farmacias");
+                break;
+            case Lugar.CLINICA:
+                myRef = database.getReference("Clinicas");
+                break;
+        }
+        myRef.child(l.crearClave()).setValue(l);
+        //Mensaje("Agregando " + l.getNombre() + " En Lat:" + l.getLatitud() + " Lon: " + l.getLongitud());
+    }
 
 
 
