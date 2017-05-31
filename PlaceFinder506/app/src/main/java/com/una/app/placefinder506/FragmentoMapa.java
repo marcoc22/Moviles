@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,19 +43,11 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
     private Location location;
     private Marker marcador;
     private Lugar lugarSeleccionado;
+    List<Lugar> clinicas;
+    List<Lugar> farmacias;
+    List<Lugar> macrobioticas;
     double latitud = 0.0;
     double longitud = 0.0;
-    Context aux2;
-    public Context getAux2() {
-        return aux2;
-    }
-
-    public void setAux2(Context aux2) {
-        this.aux2 = aux2;
-    }
-
-
-
     public Location getLocation() {
         return location;
     }
@@ -71,9 +64,36 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
         this.miMapa = miMapa;
     }
 
+    public List<Lugar> getClinicas() {
+        return clinicas;
+    }
+
+    public void setClinicas(List<Lugar> clinicas) {
+        this.clinicas = clinicas;
+    }
+
+    public List<Lugar> getFarmacias() {
+        return farmacias;
+    }
+
+    public void setFarmacias(List<Lugar> farmacias) {
+        this.farmacias = farmacias;
+    }
+
+    public List<Lugar> getMacrobioticas() {
+        return macrobioticas;
+    }
+
+    public void setMacrobioticas(List<Lugar> macrobioticas) {
+        this.macrobioticas = macrobioticas;
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         miMapa = googleMap;
+        clinicas = new ArrayList<>();
+        farmacias = new ArrayList<>();
+        macrobioticas = new ArrayList<>();
         lugarSeleccionado = new Lugar();
         //si pongo este método se cae
         miUbicacion();
@@ -84,6 +104,19 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                 LatLng position = marker.getPosition(); //
                 lugarSeleccionado.setLatitud(position.latitude);
                 lugarSeleccionado.setLongitud(position.longitude);
+                switch (marker.getSnippet()){
+                    case "Clinica":
+                        lugarSeleccionado.setTipo(Lugar.CLINICA);
+                        break;
+                    case "Farmacia":
+                        lugarSeleccionado.setTipo(Lugar.FARMACIA);
+                        break;
+                    case "Macrobiotica":
+                        lugarSeleccionado.setTipo(Lugar.MACROBIOTICA);
+                        break;
+                    default:
+                        break;
+                }
                 lugarSeleccionado.setNombre(marker.getTitle());
                 Button btnIr = (Button) getActivity().findViewById(R.id.btnIr);
                 Button btnEditar = (Button) getActivity().findViewById(R.id.btnEditar);
@@ -161,24 +194,6 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
         myRef.child(l.crearClave()).setValue(l);
         //Mensaje("Agregando " + l.getNombre() + " En Lat:" + l.getLatitud() + " Lon: " + l.getLongitud());
     }
-    public void editarLugar(Lugar l)
-    {
-        DatabaseReference myRef = null ;
-        switch(l.getTipo())
-        {
-            case Lugar.MACROBIOTICA:
-                myRef = database.getReference("Macrobioticas");
-                break;
-            case Lugar.FARMACIA:
-                myRef = database.getReference("Farmacias");
-                break;
-            case Lugar.CLINICA:
-                myRef = database.getReference("Clinicas");
-                break;
-        }
-        myRef.child(l.crearClave()).setValue(l);
-        //Mensaje("Agregando " + l.getNombre() + " En Lat:" + l.getLatitud() + " Lon: " + l.getLongitud());
-    }
 
 
 
@@ -202,8 +217,64 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                         break;
 
                     case R.id.btnEditar:
-                        Mensaje("metodo editar aqui");
-                        Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
+                        //Mensaje("metodo editar aqui");
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
+                        final View dialoglayout = inflater.inflate(R.layout.registro, null);
+                        final EditText nombre = (EditText) dialoglayout.findViewById(R.id.txtNombre);
+                        final EditText telefono = (EditText) dialoglayout.findViewById(R.id.txtTelefono);
+                        final EditText correo = (EditText) dialoglayout.findViewById(R.id.txtCorreo);
+                        final EditText pagina = (EditText) dialoglayout.findViewById(R.id.txtPagina);
+                        final Spinner sp = (Spinner) dialoglayout.findViewById(R.id.spinner);
+                        Lugar lugarObtenido = null;
+                        List<Lugar> lugaresGeneral = new ArrayList<Lugar>();
+                        if(lugarSeleccionado.getTipo()==Lugar.MACROBIOTICA){
+                            lugaresGeneral = macrobioticas;
+                        }else if(lugarSeleccionado.getTipo()==Lugar.FARMACIA){
+                            lugaresGeneral = farmacias;
+                        }else if(lugarSeleccionado.getTipo()==Lugar.CLINICA){
+                            lugaresGeneral = clinicas;
+                        }
+                        for(int i=0;i<lugaresGeneral.size();i++){
+                            lugarObtenido = lugaresGeneral.get(i);
+                            if(lugarObtenido.getLatitud() == lugarSeleccionado.getLatitud() && lugarObtenido.getLongitud() == lugarSeleccionado.getLongitud()){
+                                nombre.setText(lugarObtenido.getNombre());
+                                telefono.setText(lugarObtenido.getTelefono());
+                                correo.setText(lugarObtenido.getCorreo());
+                                pagina.setText(lugarObtenido.getPaginaWeb());
+                                sp.setSelection(lugarObtenido.getTipo());
+                            }
+                        }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setPositiveButton("Actualizar",new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                lugarSeleccionado.setNombre(nombre.getText().toString());
+                                lugarSeleccionado.setTelefono(telefono.getText().toString());
+                                lugarSeleccionado.setCorreo(correo.getText().toString());
+                                lugarSeleccionado.setPaginaWeb(pagina.getText().toString());
+                                lugarSeleccionado.setTipo(sp.getSelectedItemPosition());
+                                agregarLugar(lugarSeleccionado);
+                                MensajeOK(sp.getSelectedItem().toString() + " actualizada");
+                                dialog.dismiss();//Called dismiss here but dialog doesnt closes
+                            }
+                        });
+                        builder.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();//Called dismiss here but dialog doesnt closes
+                            }
+                        });
+
+                        builder.setView(dialoglayout);
+                        builder.setTitle("Edición de Lugar");
+                        builder.show();
+
+                        //Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
                         break;
 
                     case R.id.btnEliminar:
@@ -280,7 +351,17 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
     }
 
 
-
+    public void MensajeOK(String msg){
+        View v1 = getActivity().getWindow().getDecorView().getRootView();
+        AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
+        builder1.setMessage(msg);
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {} });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+        ;};
 
     public void ubicarFarmacias(List<Lugar> lugares){
         for(int i=0;i<lugares.size();i++){
@@ -290,6 +371,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.markergreen))
                     .anchor(0.0f, 1.0f)
                     .position(milugar)
+                    .snippet("Farmacia")
                     .title(lugar.getNombre())
             );
         }
@@ -303,6 +385,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.markerblue))
                     .anchor(0.0f, 1.0f)
                     .position(milugar)
+                    .snippet("Clinica")
                     .title(lugar.getNombre())
             );
         }
@@ -315,6 +398,7 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.markerorange))
                     .anchor(0.0f, 1.0f)
                     .position(milugar)
+                    .snippet("Macrobiotica")
                     .title(lugar.getNombre())
             );
         }

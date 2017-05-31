@@ -50,10 +50,6 @@ public class categorias extends AppCompatActivity
 
     private GoogleApiClient googleApiClient;
     private FragmentoMapa fragmentoMapa;
-    List<Lugar> clinicas;
-    List<Lugar> farmacias;
-    List<Lugar> macrobioticas;
-
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference f = null;
     DatabaseReference m = null;
@@ -65,9 +61,6 @@ public class categorias extends AppCompatActivity
         setContentView(R.layout.activity_categorias);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        clinicas = new ArrayList<>();
-        farmacias = new ArrayList<>();
-        macrobioticas = new ArrayList<>();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -168,18 +161,18 @@ public class categorias extends AppCompatActivity
             this.fragmentoMapa.getMiMapa().clear();
             this.fragmentoMapa.ubicacionActual();
             cargarClinicias();
-            this.fragmentoMapa.ubicarClinicas(this.clinicas);
+            this.fragmentoMapa.ubicarClinicas(fragmentoMapa.getClinicas());
         } else if (id == R.id.nav_farmacia) {
             this.fragmentoMapa.getMiMapa().clear();
             this.fragmentoMapa.ubicacionActual();
             cargarFarmacias();
-            this.fragmentoMapa.ubicarFarmacias(this.farmacias);
+            this.fragmentoMapa.ubicarFarmacias(fragmentoMapa.getFarmacias());
 
         }else if (id == R.id.nav_macrobiotica) {
             this.fragmentoMapa.getMiMapa().clear();
             this.fragmentoMapa.ubicacionActual();
             cargarMacrobioticas();
-            this.fragmentoMapa.ubicarMacrobioticas(this.macrobioticas);
+            this.fragmentoMapa.ubicarMacrobioticas(fragmentoMapa.getMacrobioticas());
         }
         else if (id == R.id.nav_msj) {
             //ENVIAR UN MSJ CON LA UBICACIÓN ACTUAL
@@ -264,12 +257,12 @@ public class categorias extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fragmentoMapa.getMiMapa().clear();
-                clinicas = new ArrayList<Lugar>();
+                fragmentoMapa.setClinicas(new ArrayList<Lugar>());
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Lugar  lugar = postSnapshot.getValue(Lugar.class);
-                    clinicas.add(lugar);
+                    fragmentoMapa.getClinicas().add(lugar);
                 }
-                fragmentoMapa.ubicarClinicas(clinicas);
+                fragmentoMapa.ubicarClinicas(fragmentoMapa.getClinicas());
             }
 
             @Override
@@ -285,12 +278,12 @@ public class categorias extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fragmentoMapa.getMiMapa().clear();
-                farmacias = new ArrayList<Lugar>();
+                fragmentoMapa.setFarmacias(new ArrayList<Lugar>());
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Lugar  lugar = postSnapshot.getValue(Lugar.class);
-                    farmacias.add(lugar);
+                    fragmentoMapa.getFarmacias().add(lugar);
                 }
-                fragmentoMapa.ubicarFarmacias(farmacias);
+                fragmentoMapa.ubicarFarmacias(fragmentoMapa.getFarmacias());
             }
 
             @Override
@@ -313,12 +306,12 @@ public class categorias extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fragmentoMapa.getMiMapa().clear();
-                macrobioticas = new ArrayList<Lugar>();
+                fragmentoMapa.setMacrobioticas(new ArrayList<Lugar>());
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Lugar  lugar = postSnapshot.getValue(Lugar.class);
-                    macrobioticas.add(lugar);
+                    fragmentoMapa.getMacrobioticas().add(lugar);
                 }
-                fragmentoMapa.ubicarMacrobioticas(macrobioticas);
+                fragmentoMapa.ubicarMacrobioticas(fragmentoMapa.getMacrobioticas());
             }
 
             @Override
