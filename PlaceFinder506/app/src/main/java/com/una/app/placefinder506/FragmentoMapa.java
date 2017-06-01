@@ -3,10 +3,12 @@ package com.una.app.placefinder506;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -64,27 +66,32 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
     private GoogleMap miMapa;
-    private Location location;
     private Marker marcador;
     private Lugar lugarSeleccionado;
     List<Lugar> clinicas;
     List<Lugar> farmacias;
     List<Lugar> macrobioticas;
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
     double latitud = 0.0;
     double longitud = 0.0;
     ArrayList<LatLng> MarkerPoints;
     GoogleApiClient mGoogleApiClient;
+
+
+
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
 
-    public Location getLocation() {
-        return location;
-    }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 
     public GoogleMap getMiMapa() {
         return miMapa;
@@ -154,8 +161,11 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
                 }
                 lugarSeleccionado.setNombre(marker.getTitle());
                 Button btnIr = (Button) getActivity().findViewById(R.id.btnIr);
+                Button btnLlamar = (Button) getActivity().findViewById(R.id.btnLlamar);
                 Button btnEditar = (Button) getActivity().findViewById(R.id.btnEditar);
                 Button btnEliminar = (Button) getActivity().findViewById(R.id.btnEliminar);
+                if (btnLlamar.getVisibility()==btnLlamar.VISIBLE){
+                    btnLlamar.setVisibility(btnLlamar.INVISIBLE);} else {btnLlamar.setVisibility(btnLlamar.VISIBLE);}
                 if (btnIr.getVisibility()==btnIr.VISIBLE){
                     btnIr.setVisibility(btnIr.INVISIBLE);} else {btnIr.setVisibility(btnIr.VISIBLE);}
                 if (btnEditar.getVisibility()==btnEditar.VISIBLE){
@@ -166,59 +176,10 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
             }
         });
         OnclickDelButton(R.id.btnIr);
+        OnclickDelButton(R.id.btnLlamar);
         OnclickDelButton(R.id.btnEditar);
         OnclickDelButton(R.id.btnEliminar);
-// Setting onclick event listener for the map
-       /* miMapa.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
-            @Override
-            public void onMapClick(LatLng point) {
-
-                // Already two locations
-                if (MarkerPoints.size() > 1) {
-                    MarkerPoints.clear();
-                    miMapa.clear();
-                }
-
-                // Adding new item to the ArrayList
-                MarkerPoints.add(point);
-
-                // Creating MarkerOptions
-                MarkerOptions options = new MarkerOptions();
-
-                // Setting the position of the marker
-                options.position(point);
-
-
-                if (MarkerPoints.size() == 1) {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                } else if (MarkerPoints.size() == 2) {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                }
-
-
-
-                miMapa.addMarker(options);
-
-
-                if (MarkerPoints.size() >= 2) {
-                    LatLng origin = MarkerPoints.get(0);
-                    LatLng dest = MarkerPoints.get(1);
-
-
-                    String url = getUrl(origin, dest);
-                    Log.d("onMapClick", url.toString());
-                    FetchUrl FetchUrl = new FetchUrl();
-
-
-                    FetchUrl.execute(url);
-
-                    miMapa.moveCamera(CameraUpdateFactory.newLatLng(origin));
-                    miMapa.animateCamera(CameraUpdateFactory.zoomTo(11));
-                }
-
-            }
-        });*/
         miMapa.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng latLng) {
@@ -315,8 +276,28 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
                         LatLng originPoint = new LatLng(dest.getLatitud(),dest.getLongitud());
                         miMapa.moveCamera(CameraUpdateFactory.newLatLng(originPoint));
                         miMapa.animateCamera(CameraUpdateFactory.zoomTo(16));
-                        Mensaje("metodo ruta aquí");
-                        Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
+                        break;
+                    case R.id.btnLlamar:
+                        Lugar lugarEncontrado = null;
+                        if(lugarSeleccionado.getTipo()==Lugar.MACROBIOTICA){
+                            lugaresGeneral = macrobioticas;
+                        }else if(lugarSeleccionado.getTipo()==Lugar.FARMACIA){
+                            lugaresGeneral = farmacias;
+                        }else if(lugarSeleccionado.getTipo()==Lugar.CLINICA){
+                            lugaresGeneral = clinicas;
+                        }
+                        for(int i=0;i<lugaresGeneral.size();i++){
+                            lugarObtenido = lugaresGeneral.get(i);
+                            if(lugarObtenido.getLatitud() == lugarSeleccionado.getLatitud() && lugarObtenido.getLongitud() == lugarSeleccionado.getLongitud()){
+                                lugarEncontrado = lugarObtenido;
+                            }
+                        }
+                        if(lugarEncontrado!=null){
+                            MarcarNumero(lugarEncontrado.getTelefono());
+                        }else{
+                            MensajeOK("Lugar no existe");
+                        }
+
                         break;
 
                     case R.id.btnEditar:
@@ -373,12 +354,9 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
                         builder.setView(dialoglayout);
                         builder.setTitle("Edición de Lugar");
                         builder.show();
-
-                        //Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
                         break;
 
                     case R.id.btnEliminar:
-                        //Mensaje(lugarSeleccionado.getNombre()+","+lugarSeleccionado.getLatitud()+","+lugarSeleccionado.getLongitud());
 
                         if(lugarSeleccionado.getTipo()==Lugar.MACROBIOTICA){
                             lugaresGeneral = macrobioticas;
@@ -415,12 +393,13 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
         LatLng milugar = new LatLng(lat, lng);
         CameraUpdate miubicacion = CameraUpdateFactory.newLatLngZoom(milugar, 16);
         if (marcador != null) marcador.remove();
-        marcador = miMapa.addMarker(new MarkerOptions().position(milugar).title("Mi posición Actual"));
+        //marcador = miMapa.addMarker(new MarkerOptions().position(milugar).title("Mi posición Actual"));
         miMapa.animateCamera(miubicacion);
     }
 
     private void actualizarUbicacion(Location location) {
         if (location != null) {
+
             latitud = location.getLatitude();
             longitud = location.getLongitude();
             addMarcador(latitud, longitud);
@@ -464,7 +443,12 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
         }
     }
 
-
+    public void MarcarNumero(String numero){
+        Intent i = new
+                Intent(android.content.Intent.ACTION_DIAL,
+                Uri.parse("tel:" + numero));
+        startActivity(i);
+    };
     public void MensajeOK(String msg){
         View v1 = getActivity().getWindow().getDecorView().getRootView();
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());

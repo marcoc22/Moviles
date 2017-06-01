@@ -1,7 +1,9 @@
 package com.una.app.placefinder506;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -59,17 +61,30 @@ public class Actividad01 extends AppCompatActivity implements GoogleApiClient.On
     }
     private void handleSignInResult(GoogleSignInResult resultado){
         if(resultado.isSuccess()){
+
             goMainScreen();
         }else{
             Toast.makeText(this,"No se pudo iniciar sesión", Toast.LENGTH_SHORT).show();
         }
     }
     public void goMainScreen(){
+
         Intent intent = new Intent(this,categorias.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        MensajeOK("Bienvenido a PlaceFinder 506");
         startActivity(intent);
     }
 
     public void Mensaje(String msg){getSupportActionBar().setTitle(msg);}
-
+    public void MensajeOK(String msg){
+        View v1 = getWindow().getDecorView().getRootView();
+        AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
+        builder1.setMessage(msg);
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {} });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+        ;};
 } // [18:25:04] Fin de la Clase Actividad 01
