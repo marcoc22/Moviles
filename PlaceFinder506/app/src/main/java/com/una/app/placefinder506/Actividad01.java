@@ -16,7 +16,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-
+/**
+ * Created by
+ * Angélica
+ * Bryhan
+ * Marco
+ * Massiel Mora Rodríguez cedula: 604190071
+ */
 public class Actividad01 extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
     private GoogleApiClient googleApiClient;
     private SignInButton signInButton;
@@ -69,22 +75,12 @@ public class Actividad01 extends AppCompatActivity implements GoogleApiClient.On
     }
     public void goMainScreen(){
 
-        Intent intent = new Intent(this,categorias.class);
+        Intent intent = new Intent(this,ActividadBienvenida.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        MensajeOK("Bienvenido a PlaceFinder 506");
+
         startActivity(intent);
     }
 
     public void Mensaje(String msg){getSupportActionBar().setTitle(msg);}
-    public void MensajeOK(String msg){
-        View v1 = getWindow().getDecorView().getRootView();
-        AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
-        builder1.setMessage(msg);
-        builder1.setCancelable(true);
-        builder1.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {} });
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-        ;};
+
 } // [18:25:04] Fin de la Clase Actividad 01

@@ -2,7 +2,13 @@ package com.una.app.placefinder506;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
+/**
+ * Created by
+ * Angélica
+ * Bryhan
+ * Marco
+ * Massiel Mora Rodríguez cedula: 604190071
+ */
 public class DeveloperInfo extends AppCompatActivity {
 
     @Override

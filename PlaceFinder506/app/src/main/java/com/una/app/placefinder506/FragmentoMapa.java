@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -55,6 +56,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
+
+import static android.R.attr.type;
+import static com.una.app.placefinder506.R.id.btnAutomovil;
+import static com.una.app.placefinder506.R.id.btnCaminando;
+import static com.una.app.placefinder506.R.id.btnIr;
+
 /**
  * Created by
  * Angélica
@@ -62,6 +74,7 @@ import java.util.List;
  * Marco
  * Massiel Mora Rodríguez cedula: 604190071
  */
+
 public class FragmentoMapa extends Fragment implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -164,21 +177,31 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
                 Button btnLlamar = (Button) getActivity().findViewById(R.id.btnLlamar);
                 Button btnEditar = (Button) getActivity().findViewById(R.id.btnEditar);
                 Button btnEliminar = (Button) getActivity().findViewById(R.id.btnEliminar);
+                Button btnCaminando = (Button) getActivity().findViewById(R.id.btnCaminando);
+                Button btnAutomovil = (Button) getActivity().findViewById(R.id.btnAutomovil);
                 if (btnLlamar.getVisibility()==btnLlamar.VISIBLE){
                     btnLlamar.setVisibility(btnLlamar.INVISIBLE);} else {btnLlamar.setVisibility(btnLlamar.VISIBLE);}
                 if (btnIr.getVisibility()==btnIr.VISIBLE){
-                    btnIr.setVisibility(btnIr.INVISIBLE);} else {btnIr.setVisibility(btnIr.VISIBLE);}
+                    btnCaminando.setVisibility(btnCaminando.INVISIBLE);
+                    btnIr.setVisibility(btnIr.INVISIBLE);
+                } else {
+                    btnIr.setVisibility(btnIr.VISIBLE);
+                }
                 if (btnEditar.getVisibility()==btnEditar.VISIBLE){
                     btnEditar.setVisibility(btnEditar.INVISIBLE);} else {btnEditar.setVisibility(btnEditar.VISIBLE);}
                 if (btnEliminar.getVisibility()==btnEliminar.VISIBLE){
                     btnEliminar.setVisibility(btnEliminar.INVISIBLE);} else {btnEliminar.setVisibility(btnEliminar.VISIBLE);}
+
+
                 return false;
             }
         });
-        OnclickDelButton(R.id.btnIr);
+        OnclickDelButton(btnIr);
         OnclickDelButton(R.id.btnLlamar);
         OnclickDelButton(R.id.btnEditar);
         OnclickDelButton(R.id.btnEliminar);
+        OnclickDelButton(R.id.btnCaminando);
+        OnclickDelButton(R.id.btnAutomovil);
 
         miMapa.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -259,7 +282,8 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
                 List<Lugar> lugaresGeneral = new ArrayList<Lugar>();
                 switch (v.getId()) {
 
-                    case R.id.btnIr:
+                    case btnIr:
+
                         Lugar origin = new Lugar();
                         origin.setLatitud(latitud);
                         origin.setLongitud(longitud);
@@ -276,6 +300,8 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
                         LatLng originPoint = new LatLng(dest.getLatitud(),dest.getLongitud());
                         miMapa.moveCamera(CameraUpdateFactory.newLatLng(originPoint));
                         miMapa.animateCamera(CameraUpdateFactory.zoomTo(16));
+                        Button btnCaminando = (Button) getActivity().findViewById(R.id.btnCaminando);
+                        btnCaminando.setVisibility(btnCaminando.VISIBLE);
                         break;
                     case R.id.btnLlamar:
                         Lugar lugarEncontrado = null;
@@ -372,6 +398,20 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
                                 MensajeOK("Lugar eliminar");
                             }
                         }
+                        break;
+                    case R.id.btnCaminando:
+                        origin = new Lugar();
+                        origin.setLatitud(latitud);
+                        origin.setLongitud(longitud);
+                        dest = lugarSeleccionado;
+                        build_retrofit_and_get_response(v,"WALKING",dest.getLatitud(),dest.getLongitud());
+                        break;
+                    case R.id.btnAutomovil:
+                        origin = new Lugar();
+                        origin.setLatitud(latitud);
+                        origin.setLongitud(longitud);
+                        dest = lugarSeleccionado;
+                        build_retrofit_and_get_response(v,"DRIVING",dest.getLatitud(),dest.getLongitud());
                         break;
                     default:
                         break;
@@ -516,7 +556,51 @@ public class FragmentoMapa extends Fragment implements OnMapReadyCallback,Google
         fragment.getMapAsync(this);
 
     }
+    private void build_retrofit_and_get_response(final View v,String type, double destLatitude, double destLongitude ) {
 
+        String url = "https://maps.googleapis.com/maps/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitMaps service = retrofit.create(RetrofitMaps.class);
+
+        Call<Example> call = service.getDistanceDuration("metric", latitud + "," + longitud,destLatitude + "," + destLongitude, type);
+
+        call.enqueue(new Callback<Example>() {
+            @Override
+            public void onResponse(Response<Example> response, Retrofit retrofit) {
+
+                try {
+                    //Remove previous line from map
+
+                    // This loop will go through all the results and add marker on each location.
+
+                    for (int i = 0; i < response.body().getRoutes().size(); i++) {
+                        String distance = response.body().getRoutes().get(i).getLegs().get(i).getDistance().getText();
+                        String time = response.body().getRoutes().get(i).getLegs().get(i).getDuration().getText();
+                        //String encodedString = response.body().getRoutes().get(0).getOverviewPolyline().getPoints();
+                        String texto = "Distancia: "+distance+"\n" + "Tiempo: "+time;
+
+                        Snackbar.make(v, texto, Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                    }
+                } catch (Exception e) {
+                    Log.d("onResponse", "There is an error");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("onFailure", t.toString());
+            }
+        });
+
+    }
     private String getUrl(Lugar origin,Lugar dest) {
 
         // Origin of route

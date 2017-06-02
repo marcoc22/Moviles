@@ -1,7 +1,11 @@
 package com.una.app.placefinder506;
 
 /**
- * Created by Marco on 19/4/2017.
+ * Created by
+ * Angélica
+ * Bryhan
+ * Marco
+ * Massiel Mora Rodríguez cedula: 604190071
  */
 public class Lugar {
 

@@ -1,56 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btnIr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="0"
-            android:text="Ir a"
-            android:visibility="invisible" />
-        <Button
-            android:id="@+id/btnLlamar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="0"
-            android:text="Llamar"
-            android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/btnEditar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_row="0"
-            android:text="Editar"
-            android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/btnEliminar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:layout_row="0"
-            android:text="Eliminar"
-            android:visibility="invisible" />
-
-    </GridLayout>
-
     <fragment
         android:id="@+id/fragmentoMapa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        class="com.google.android.gms.maps.MapFragment"></fragment>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.MapFragment">
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnIr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="Ir a"
+                android:alpha=".80"
+                android:visibility="invisible" />
+
+
+            <Button
+                android:id="@+id/btnEditar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:text="Editar"
+                android:alpha=".80"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEliminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_row="0"
+                android:text="Eliminar"
+                android:alpha=".80"
+                android:visibility="invisible" />
+
+        </GridLayout>
+
+        <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnLlamar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/phone"
+                android:text=""
+                android:layout_marginTop="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:visibility="invisible"/>
+            <Button
+                android:id="@+id/btnCaminando"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/walk"
+                android:text=""
+                android:layout_marginTop="120dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:visibility="invisible"/>
+            <Button
+                android:id="@+id/btnAutomovil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/car"
+                android:text=""
+                android:layout_marginTop="180dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+    </fragment>
 
 
 </LinearLayout>
