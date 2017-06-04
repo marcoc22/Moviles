@@ -232,6 +232,9 @@ public class categorias extends AppCompatActivity
                     }
                 }
             });
+        }else if (id == R.id.nav_video) {
+            Intent intento = new Intent(getApplicationContext(), ActividadYoutube.class);
+            startActivity(intento);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

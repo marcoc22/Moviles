@@ -34,6 +34,10 @@
     android:icon="@drawable/ic_cast_disabled_light"
     android:title="Créditos" />
     <item
+        android:id="@+id/nav_video"
+        android:icon="@drawable/ic_play_light"
+        android:title="Video Demostrativo" />
+    <item
         android:id="@+id/nav_salir"
         android:icon="@drawable/ic_close_light"
         android:title="Cerrar sesión" />

@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -30,10 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".DeveloperInfo" />
-        <activity
-            android:name=".Actividad01"
-
-            />
+        <activity android:name=".Actividad01" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -42,7 +41,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCCrSbDZ5wch_NTF-MBNfk2FEn-UZY7CTk" />
 
-        <activity android:name=".ActividadBienvenida"></activity>
+        <activity android:name=".ActividadBienvenida" />
+        <activity android:name=".ActividadYoutube"></activity>
     </application>
 
 </manifest>
